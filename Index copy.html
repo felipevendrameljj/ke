@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Momentos para Você - Com amor e lembranças</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap');
+  body {
+    margin:0;
+    padding:0;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('https://images.hdqwalls.com/wallpapers/lilo-and-stitch-4k-disney.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #fffbea;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,50,0.7);
+    z-index: 0;
+  }
+  header {
+    font-family: 'Pacifico', cursive;
+    font-size: 3.8rem;
+    margin: 30px 10px 10px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 3px 3px 8px #040d18;
+    user-select: none;
+  }
+  p.subtitle {
+    font-style: italic;
+    font-size: 1.3rem;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 1px 1px 7px #000;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 20px;
+    max-width: 900px;
+    width: 90%;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40px;
+  }
+  .gallery img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 0 0 15px 3px rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    border: 3px solid #66ccff;
+  }
+  .gallery img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px 6px #66ccff;
+  }
+  footer {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+    user-select: none;
+    color: #f0f4ffcc;
+    text-shadow: 1px 1px 3px #000a;
+  }
+  /* Player container */
+  .player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,50,0.8);
+    border-radius: 50px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+    box-shadow: 0 0 15px #66ccff88;
+  }
+  .player button {
+    background: #66ccff;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    box-shadow: 0 0 8px #66ccffbb;
+    transition: background 0.3s ease;
+    color: #003366;
+    font-weight: bold;
+    font-size: 1.3rem;
+    user-select: none;
+  }
+  .player button:hover {
+    background: #99ddff;
+  }
+  .player span {
+    color: #cce8ff;
+    font-family: 'Pacifico', cursive;
+    user-select: none;
+  }
+  /* Modal styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal.show {
+    display: flex;
+  }
+  .modal-content {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    max-width: 600px;
+    text-align: center;
+    color: #fffbea;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
+  }
+  .modal-content img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 25px 6px #66ccffcc;
+  }
+  .modal-content p {
+    position: absolute;
+    bottom: 20px; /* Distância do fundo */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+    padding: 10px;
+    border-radius: 5px;
+    width: 90%; /* Largura do texto */
+    text-align: center; /* Centraliza o texto */
+  }
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #fffbea;
+    font-size: 2.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  @media(max-width:600px){
+    header {
+      font-size: 2.8rem;
+    }
+    .gallery img {
+      height: 150px;
+    }
+    .player {
+      bottom: 15px;
+      right: 15px;
+      padding: 6px 12px;
+      gap: 8px;
+    }
+    .player button {
+      width: 34px;
+      height: 34px;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>Momentos com Você</header>
+  <p class="subtitle">Cada foto aqui guarda um pedaço do meu amor e das lembranças que nunca vão se apagar. Que essas memórias toquem seu coração como tocam o meu.</p>
+  <section class="gallery" aria-label="Galeria de fotos de memória">
+    <img src="foto1.jpg" alt="Nosso momento 1" onclick="openModal('foto1.jpg', 'Eu amei você de todas as formas possíveis. Mesmo sendo o doidinho que tentou dar o mundo a você, eu sempre estarei aqui, guardando essas memórias.')" />
+    <img src="foto2.jpg" alt="Nosso momento 2" onclick="openModal('foto2.jpg', 'Cada momento ao seu lado foi especial. Eu te amo e sempre vou te amar, mesmo com todos os meus erros.')" />
+    <img src="foto3.jpg" alt="Nosso momento 3" onclick="openModal('foto3.jpg', 'Você é uma parte importante da minha vida. Mesmo que as coisas não tenham dado certo, meu amor por você permanece.')" />
+  </section>
+
+  <footer>Feito com todo meu amor e melodia ❤️</footer>
+
+  <div class="player" role="region" aria-label="Controle de música de fundo">
+    <button id="playPauseBtn" aria-label="Tocar música">►</button>
+    <span>Música de Fundo</span>
+    <audio id="audioPlayer" src="musica.mp3" loop></audio>
+  </div>
+
+  <div class="modal" id="myModal" role="dialog" aria-modal="true" aria-labelledby="modalText">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" aria-label="Fechar">&times;</span>
+      <img id="modalImage" src="" alt="Imagem ampliada" />
+      <p id="modalText"></p>
+    </div>
+  </div>
+
+  <script>
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const modal = document.getElementById('myModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalText = document.getElementById('modalText');
+    const closeBtn = document.querySelector('.close');
+
+    playPauseBtn.addEventListener('click', () => {
+      if (audioPlayer.paused) {
+        audioPlayer.play();
+        playPauseBtn.textContent = '❚❚';
+        playPauseBtn.setAttribute('aria-label', 'Pausar música');
+      } else {
+        audioPlayer.pause();
+        playPauseBtn.textContent = '►';
+        playPauseBtn.setAttribute('aria-label', 'Tocar música');
+      }
+    });
+
+    function openModal(imageSrc, text) {
+      modalImage.src = imageSrc;
+      modalText.textContent = text;
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      modal.classList.remove('show');
+      // Opcional: limpa imagem e texto para performance
+      modalImage.src = '';
+      modalText.textContent = '';
+    }
+
+    // Fechar modal ao clicar fora da modal-content
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    // Fechar modal com ESC
+    window.addEventListener('keydown', (event) => {
+      if (event.key === "Escape" && modal.classList.contains('show')) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
